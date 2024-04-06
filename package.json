@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-proverif",
+  "version": "1.0.0",
+  "description": "Proverif tree-sitter parser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pqcfox/tree-sitter-proverif.git"
+  },
+  "author": "Kat Fox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pqcfox/tree-sitter-proverif/issues"
+  },
+  "homepage": "https://github.com/pqcfox/tree-sitter-proverif#readme"
+}
