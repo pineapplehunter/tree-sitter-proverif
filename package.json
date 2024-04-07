@@ -42,5 +42,9 @@
     "bindings/node/*",
     "queries/*",
     "src/**"
+  ],
+  "tree-sitter": [
+    {"file-types": ["proverif"]}
   ]
+
 }

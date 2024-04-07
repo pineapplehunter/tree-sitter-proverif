@@ -1,0 +1,11 @@
+=================
+Type declarations
+=================
+
+type t; 
+
+---
+
+(source_file
+  (type_declaration
+    (identifier)))
