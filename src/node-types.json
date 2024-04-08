@@ -2,39 +2,28 @@
   {
     "type": "channel_declaration",
     "named": true,
-    "fields": {
-      "names": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier_list",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "free_declaration",
     "named": true,
     "fields": {
-      "names": {
-        "multiple": false,
+      "name": {
+        "multiple": true,
         "required": true,
         "types": [
           {
-            "type": "identifier_list",
-            "named": true
-          }
-        ]
-      },
-      "options": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "reduc_free_options_list",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -56,18 +45,29 @@
     }
   },
   {
-    "type": "identifier_list",
+    "type": "in_process",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "channel": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "message": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -84,8 +84,8 @@
           }
         ]
       },
-      "params": {
-        "multiple": true,
+      "parameters": {
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -107,42 +107,23 @@
     }
   },
   {
-    "type": "parameter_list",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "parameter_type_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parameter_type_declaration",
+    "type": "out_process",
     "named": true,
     "fields": {
-      "names": {
+      "channel": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier_list",
+            "type": "identifier",
             "named": true
           }
         ]
       },
-      "type": {
+      "message": {
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "channel",
-            "named": false
-          },
           {
             "type": "identifier",
             "named": true
@@ -152,14 +133,38 @@
     }
   },
   {
-    "type": "process",
+    "type": "parameter_list",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type_annotation",
+          "named": true
+        }
+      ]
+    }
   },
   {
-    "type": "reduc_free_options_list",
+    "type": "process",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "in_process",
+          "named": true
+        },
+        {
+          "type": "out_process",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "source_file",
@@ -186,6 +191,36 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "type_annotation",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "channel",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -229,6 +264,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "=",
     "named": false
   },
@@ -253,7 +292,15 @@
     "named": true
   },
   {
+    "type": "in",
+    "named": false
+  },
+  {
     "type": "let",
+    "named": false
+  },
+  {
+    "type": "out",
     "named": false
   },
   {

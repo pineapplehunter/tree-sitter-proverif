@@ -8,8 +8,7 @@ type t.
 
 (source_file
   (type_declaration
-    name: (identifier)))
-
+    (identifier)))
 
 ====================
 Channel declarations
@@ -20,10 +19,9 @@ channel c, d.
 ---
 
 (source_file
-  (channel_declaration 
-    names: (identifier_list
-      (identifier)
-      (identifier)))) 
+  (channel_declaration
+    (identifier)
+    (identifier)))
 
 =================
 Free declarations
@@ -35,13 +33,12 @@ free c, d: t.
 
 (source_file
   (free_declaration
-    names: (identifier_list
-      (identifier)
-      (identifier))
+    name: (identifier)
+    name: (identifier)
     type: (identifier)))
-      
+
 ==============================
-Free declarations with options 
+Free declarations with options
 ==============================
 
 free c, d: t [private].
@@ -50,11 +47,9 @@ free c, d: t [private].
 
 (source_file
   (free_declaration
-    names: (identifier_list
-      (identifier)
-      (identifier))
-    type: (identifier)
-    options: (reduc_free_options_list)))
+    name: (identifier)
+    name: (identifier)
+    type: (identifier)))
 
 ================
 Let declarations
@@ -67,15 +62,12 @@ let server(a, b: t, c: s) = 0.
 (source_file
   (let_declaration
     name: (identifier)
-    params: (parameter_list
-      (parameter_type_declaration
-        names: (identifier_list
-          (identifier)
-          (identifier))
+    parameters: (parameter_list
+      (type_annotation
+        name: (identifier)
+        name: (identifier)
         type: (identifier))
-      (parameter_type_declaration
-        names: (identifier_list
-          (identifier))
+      (type_annotation
+        name: (identifier)
         type: (identifier)))
     process: (process)))
-

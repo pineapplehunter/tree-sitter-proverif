@@ -1,0 +1,81 @@
+===============
+Yield processes
+===============
+
+let server = yield. 
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    process: (process)))
+
+=============
+Out processes
+=============
+
+let server(pk: t) = out(c, pk).
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (type_annotation
+        name: (identifier)
+        type: (identifier)))
+    process: (process
+      (out_process
+        channel: (identifier)
+        message: (identifier)))))
+
+============
+In processes
+============
+
+let server(pk: t) = in(c, pk).
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (type_annotation
+        name: (identifier)
+        type: (identifier)))
+    process: (process
+      (in_process
+        channel: (identifier)
+        message: (identifier)))))
+
+=================
+Chained processes
+=================
+
+let server(pkA: t, pkB: t) =
+  out(c, pkA);
+  in(c, pkB);
+  0.
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (type_annotation
+        name: (identifier)
+        type: (identifier))
+      (type_annotation
+        name: (identifier)
+        type: (identifier)))
+    process: (process
+      (out_process
+        channel: (identifier)
+        message: (identifier))
+      (in_process
+        channel: (identifier)
+        message: (identifier)))))
