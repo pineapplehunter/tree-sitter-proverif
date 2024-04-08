@@ -9,9 +9,63 @@ free c: channel.
 free Cocks:bitstring [private].
 free RSA:bitstring [private].
 
+query attacker(RSA).
+query attacker(Cocks).
+
 process
   out(c, RSA);
   0
+
+---
+
+(source_file
+  (comment)
+  (free_declaration
+    name: (identifier))
+  (free_declaration
+    name: (identifier)
+    type: (identifier)
+    options: (option_list
+      (identifier)))
+  (free_declaration
+    name: (identifier)
+    type: (identifier)
+    options: (option_list
+      (identifier)))
+  (query_declaration
+    query: (query
+      (predicate_term
+        predicate: (identifier)
+        parameter: (identifier))))
+  (query_declaration
+    query: (query
+      (predicate_term
+        predicate: (identifier)
+        parameter: (identifier))))
+  (process
+    (message_process
+      channel: (identifier)
+      message: (identifier))))
+
+====================
+Hello World Extended
+====================
+
+(* hello_ext.pv: Hello Extended World Script *)
+
+free c:channel.
+
+free Cocks:bitstring [private].
+free RSA:bitstring [private].
+
+event evCocks.
+event evRSA.
+
+query event(evCocks) ==> event(evRSA).
+
+process
+  out(c, RSA);
+  in(c, x: bitstring)
 
 ---
 
@@ -25,7 +79,7 @@ process
   (free_declaration
     name: (identifier)
     type: (identifier))
-  (process
-    (out_process
-      channel: (identifier)
-      message: (identifier))))
+  (event_declaration
+    name: (identifier))
+  (event_declaration
+    name: (identifier)))

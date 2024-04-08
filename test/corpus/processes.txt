@@ -22,12 +22,12 @@ let server(pk: t) = out(c, pk).
 (source_file
   (let_declaration
     name: (identifier)
-    parameters: (typed_parameter_list
+    parameters: (parameter_list
       (type_annotation
         name: (identifier)
         type: (identifier)))
     process: (process
-      (out_process
+      (message_process
         channel: (identifier)
         message: (identifier)))))
 
@@ -42,12 +42,12 @@ let server(pk: t) = in(c, pk).
 (source_file
   (let_declaration
     name: (identifier)
-    parameters: (typed_parameter_list
+    parameters: (parameter_list
       (type_annotation
         name: (identifier)
         type: (identifier)))
     process: (process
-      (in_process
+      (message_process
         channel: (identifier)
         message: (identifier)))))
 
@@ -65,7 +65,7 @@ let server(pkA: t, pkB: t) =
 (source_file
   (let_declaration
     name: (identifier)
-    parameters: (typed_parameter_list
+    parameters: (parameter_list
       (type_annotation
         name: (identifier)
         type: (identifier))
@@ -73,9 +73,9 @@ let server(pkA: t, pkB: t) =
         name: (identifier)
         type: (identifier)))
     process: (process
-      (out_process
+      (message_process
         channel: (identifier)
         message: (identifier))
-      (in_process
+      (message_process
         channel: (identifier)
         message: (identifier)))))

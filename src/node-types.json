@@ -125,7 +125,7 @@
         "required": false,
         "types": [
           {
-            "type": "parameter_list",
+            "type": "type_list",
             "named": true
           }
         ]
@@ -146,6 +146,16 @@
           }
         ]
       },
+      "options": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "option_list",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": true,
@@ -154,32 +164,6 @@
             "type": "channel",
             "named": false
           },
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "in_process",
-    "named": true,
-    "fields": {
-      "channel": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "message": {
-        "multiple": false,
-        "required": true,
-        "types": [
           {
             "type": "identifier",
             "named": true
@@ -207,7 +191,7 @@
         "required": false,
         "types": [
           {
-            "type": "typed_parameter_list",
+            "type": "parameter_list",
             "named": true
           }
         ]
@@ -225,7 +209,7 @@
     }
   },
   {
-    "type": "out_process",
+    "type": "message_process",
     "named": true,
     "fields": {
       "channel": {
@@ -235,6 +219,20 @@
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "direction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "in",
+            "named": false
+          },
+          {
+            "type": "out",
+            "named": false
           }
         ]
       },
@@ -251,15 +249,30 @@
     }
   },
   {
+    "type": "option_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parameter_list",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "type_annotation",
           "named": true
         }
       ]
@@ -312,11 +325,7 @@
       "required": false,
       "types": [
         {
-          "type": "in_process",
-          "named": true
-        },
-        {
-          "type": "out_process",
+          "type": "message_process",
           "named": true
         }
       ]
@@ -349,34 +358,22 @@
     "type": "query_declaration",
     "named": true,
     "fields": {
-      "options": {
+      "binding": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "private",
-            "named": false
+            "type": "type_annotation",
+            "named": true
           }
         ]
       },
-      "parameters": {
+      "options": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "typed_parameter_list",
+            "type": "option_list",
             "named": true
           }
         ]
@@ -479,15 +476,15 @@
     }
   },
   {
-    "type": "typed_parameter_list",
+    "type": "type_list",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "type_annotation",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -599,10 +596,6 @@
   },
   {
     "type": "out",
-    "named": false
-  },
-  {
-    "type": "private",
     "named": false
   },
   {

@@ -15,7 +15,6 @@ module.exports = grammar({
   word: $ => $.identifier,
 
   rules: {
-    // TODO: optional process/equivalence
     source_file: $ => seq(
       repeat($._declaration),
       optional(
@@ -37,7 +36,6 @@ module.exports = grammar({
       $.let_declaration,
       $.event_declaration,
       $.query_declaration,
-      // TODO: other declarations
     ),
 
     type_declaration: $ => seq(
@@ -57,7 +55,7 @@ module.exports = grammar({
       sep(',', field('name', $.identifier)),
       ':',
       field('type', $._type_identifier),
-      optional($._option_list),
+      optional(field('options', $.option_list)),
       '.',
     ),
 
@@ -66,9 +64,7 @@ module.exports = grammar({
       field('name', $.identifier),
       optional(
         seq(
-          '(',
-          field('parameters', $.typed_parameter_list),
-          ')'
+          field('parameters', $.parameter_list),
         )
       ),
       '=',
@@ -81,9 +77,7 @@ module.exports = grammar({
       field('name', $.identifier),
       optional(
         seq(
-          '(',
-          field('parameters', $.parameter_list),
-          ')'
+          field('parameters', $.type_list),
         )
       ),
       '.'
@@ -93,20 +87,26 @@ module.exports = grammar({
       'query',
       optional(
         seq(
-          field('parameters', $.typed_parameter_list),
+          sep(',', field('binding', $.type_annotation)),
           ';'
         ),
       ),
       field('query', $.query),
-      optional(
-        field('options', $._option_list)
-      ),
+      optional(field('options', $.option_list)),
       '.'
     ),
 
-    parameter_list: $ => sep(',', $._type_identifier),
+    type_list: $ => seq(
+      '(',
+      sep(',', $._type_identifier),
+      ')'
+    ),
 
-    typed_parameter_list: $ => sep(',', $.type_annotation),
+    parameter_list: $ => seq(
+      '(',
+      sep(',', $.type_annotation),
+      ')'
+    ),
 
     type_annotation: $ => seq(
       sep(',', field('name', $.identifier)),
@@ -114,11 +114,11 @@ module.exports = grammar({
       field('type', $._type_identifier)
     ),
 
-    _option_list: _ => seq(
+    option_list: $ => seq(
       '[',
-      sep(',', choice(
+      sep(',', alias(choice(
         'private'
-      )),
+      ), $.identifier)),
       ']'
     ),
 
@@ -163,26 +163,14 @@ module.exports = grammar({
       ));
     },
 
-    process: $ => sep(';', $._atomic_process),
-
-    _atomic_process: $ => choice(
+    process: $ => sep(';', choice(
       '0',
       'yield',
-      $.out_process,
-      $.in_process,
-    ),
+      $.message_process,
+    )),
 
-    out_process: $ => seq(
-      'out',
-      '(',
-      field('channel', $._process_term),
-      ',',
-      field('message', $._process_term),
-      ')'
-    ),
-
-    in_process: $ => seq(
-      'in',
+    message_process: $ => seq(
+      field('direction', choice('in', 'out')),
       '(',
       field('channel', $._process_term),
       ',',
