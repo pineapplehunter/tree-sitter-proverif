@@ -2,10 +2,80 @@
 Type declarations
 =================
 
-type t; 
+type t. 
 
 ---
 
 (source_file
   (type_declaration
-    (identifier)))
+    name: (identifier)))
+
+
+====================
+Channel declarations
+====================
+
+channel c, d.
+
+---
+
+(source_file
+  (channel_declaration 
+    names: (identifier_list
+      (identifier)
+      (identifier)))) 
+
+=================
+Free declarations
+=================
+
+free c, d: t.
+
+---
+
+(source_file
+  (free_declaration
+    names: (identifier_list
+      (identifier)
+      (identifier))
+    type: (identifier)))
+      
+==============================
+Free declarations with options 
+==============================
+
+free c, d: t [private].
+
+---
+
+(source_file
+  (free_declaration
+    names: (identifier_list
+      (identifier)
+      (identifier))
+    type: (identifier)
+    options: (reduc_free_options_list)))
+
+================
+Let declarations
+================
+
+let server(a, b: t, c: s) = 0.
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    params: (parameter_list
+      (parameter_type_declaration
+        names: (identifier_list
+          (identifier)
+          (identifier))
+        type: (identifier))
+      (parameter_type_declaration
+        names: (identifier_list
+          (identifier))
+        type: (identifier)))
+    process: (process)))
+
