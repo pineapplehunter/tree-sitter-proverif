@@ -62,7 +62,7 @@ let server(a, b: t, c: s) = 0.
 (source_file
   (let_declaration
     name: (identifier)
-    parameters: (parameter_list
+    parameters: (typed_parameter_list
       (type_annotation
         name: (identifier)
         name: (identifier)
@@ -71,3 +71,69 @@ let server(a, b: t, c: s) = 0.
         name: (identifier)
         type: (identifier)))
     process: (process)))
+
+==================
+Event declarations
+==================
+
+event actionHappens(a, b, c).
+
+---
+
+(source_file
+  (event_declaration
+    (identifier)
+    (parameter_list
+      (identifier)
+      (identifier)
+      (identifier))))
+
+============================
+Predicate query declarations
+============================
+
+query attacker(s).
+
+---
+
+(source_file
+  (query_declaration
+    query: (query
+      (predicate_term
+        predicate: (identifier)
+        parameter: (identifier)))))
+
+========================
+Event query declarations
+========================
+
+query x: t1, y: t2, z: t3; event(e(x, y)) ==> event(e'(y, z)).
+
+---
+
+(source_file
+  (query_declaration
+    parameters: (typed_parameter_list
+      (type_annotation
+        name: (identifier)
+        type: (identifier))
+      (type_annotation
+        name: (identifier)
+        type: (identifier))
+      (type_annotation
+        name: (identifier)
+        type: (identifier)))
+    query: (query
+      (binary_term
+        left: (predicate_term
+          predicate: (identifier)
+          parameter: (predicate_term
+            predicate: (identifier)
+            parameter: (identifier)
+            parameter: (identifier)))
+        right: (predicate_term
+          predicate: (identifier)
+          parameter: (predicate_term
+            predicate: (identifier)
+            parameter: (identifier)
+            parameter: (identifier)))))))

@@ -1,0 +1,31 @@
+===========
+Hello World
+===========
+
+(* hello.pv: Hello World Script *)
+
+free c: channel.
+
+free Cocks:bitstring [private].
+free RSA:bitstring [private].
+
+process
+  out(c, RSA);
+  0
+
+---
+
+(source_file
+  (comment)
+  (free_declaration
+    name: (identifier))
+  (free_declaration
+    name: (identifier)
+    type: (identifier))
+  (free_declaration
+    name: (identifier)
+    type: (identifier))
+  (process
+    (out_process
+      channel: (identifier)
+      message: (identifier))))
