@@ -31,6 +31,7 @@ module.exports = grammar({
 
     _declaration: $ => choice(
       $.type_declaration,
+      $.fun_declaration,
       $.channel_declaration,
       $.free_declaration,
       $.let_declaration,
@@ -41,6 +42,15 @@ module.exports = grammar({
     type_declaration: $ => seq(
       'type',
       field('name', $.identifier),
+      '.'
+    ),
+
+    fun_declaration: $ => seq(
+      'fun',
+      field('name', $.identifier),
+      optional(field('parameters', choice($.type_list, seq('(', ')')))),
+      ':',
+      field('return', $._type_identifier),
       '.'
     ),
 

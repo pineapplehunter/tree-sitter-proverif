@@ -7,10 +7,11 @@
       "title": "Proverif",
       "scope": "source.proverif",
       "file-types": [
-        "proverif"
+        "pv"
       ],
       "injection-regex": "^proverif$",
-      "class-name": "TreeSitterProverif"
+      "class-name": "TreeSitterProverif",
+      "highlights": "queries/highlights.scm"
     }
   ],
   "metadata": {

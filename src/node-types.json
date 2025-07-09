@@ -173,6 +173,54 @@
     }
   },
   {
+    "type": "fun_declaration",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "type_list",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "channel",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "let_declaration",
     "named": true,
     "fields": {
@@ -393,6 +441,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -408,6 +457,10 @@
         },
         {
           "type": "free_declaration",
+          "named": true
+        },
+        {
+          "type": "fun_declaration",
           "named": true
         },
         {
@@ -572,7 +625,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "event",
@@ -580,6 +634,10 @@
   },
   {
     "type": "free",
+    "named": false
+  },
+  {
+    "type": "fun",
     "named": false
   },
   {
