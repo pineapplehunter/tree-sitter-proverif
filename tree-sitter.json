@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "proverif",
+      "camelcase": "Proverif",
+      "title": "Proverif",
+      "scope": "source.proverif",
+      "file-types": [
+        "proverif"
+      ],
+      "injection-regex": "^proverif$",
+      "class-name": "TreeSitterProverif"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "ProVerif is an automatic cryptographic protocol verifier",
+    "authors": [
+      {
+        "name": "Shogo Takata",
+        "email": "peshogo@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/pineapplehunter/tree-sitter-proverif"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
