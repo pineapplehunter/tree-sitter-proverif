@@ -1,0 +1,1634 @@
+================================================================================
+type definition (basic, no options)
+================================================================================
+
+type key.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (type_def
+      (ident))))
+
+================================================================================
+type definition (one option)
+================================================================================
+
+type key[fixed].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (type_def
+      (ident)
+      (options
+        (option)))))
+
+================================================================================
+type definition (multiple options)
+================================================================================
+
+type nonce[large,fixed].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (type_def
+      (ident)
+      (options
+        (option)
+        (option)))))
+
+================================================================================
+channel declaration (single)
+================================================================================
+
+channel c.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_channel
+      (ident))))
+
+================================================================================
+channel declaration (multiple)
+================================================================================
+
+channel c, d, e.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_channel
+      (ident)
+      (ident)
+      (ident))))
+
+================================================================================
+free declaration (single, no options)
+================================================================================
+
+free signature: bitstring.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_free
+      (ident)
+      (typeid
+        (ident)))))
+
+================================================================================
+free declaration (multiple, no options)
+================================================================================
+
+free signature, ciphertext: bitstring.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_free
+      (ident)
+      (ident)
+      (typeid
+        (ident)))))
+
+================================================================================
+free declaration (single, with options)
+================================================================================
+
+free plaintext: bitstring [private].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_free
+      (ident)
+      (typeid
+        (ident))
+      (options
+        (option)))))
+
+================================================================================
+free declaration (multiple, with options)
+================================================================================
+
+free plaintext, key: bitstring [private].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_free
+      (ident)
+      (ident)
+      (typeid
+        (ident))
+      (options
+        (option)))))
+
+================================================================================
+const declaration (single, no options)
+================================================================================
+
+const A: host.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_const
+      (ident)
+      (typeid
+        (ident)))))
+
+================================================================================
+const declaration (multiple, no options)
+================================================================================
+
+const A, B: host.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_const
+      (ident)
+      (ident)
+      (typeid
+        (ident)))))
+
+================================================================================
+const declaration (single, with options)
+================================================================================
+
+const emptyset: keyset [data].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_const
+      (ident)
+      (typeid
+        (ident))
+      (options
+        (option)))))
+
+================================================================================
+const declaration (multiple, with options)
+================================================================================
+
+const c0, c1: tag [data].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_const
+      (ident)
+      (ident)
+      (typeid
+        (ident))
+      (options
+        (option)))))
+
+================================================================================
+function declaration (arity 0, no options)
+================================================================================
+
+fun foo(): bitstring.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident)))))
+
+================================================================================
+function declaration (arity 0, with options)
+================================================================================
+
+fun foo(): bitstring [data, typeConverter].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (options
+        (option)
+        (option)))))
+
+================================================================================
+function declaration (arity 1, no options)
+================================================================================
+
+fun pk(skey): pkey.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))
+
+================================================================================
+function declaration (arity 1, with options)
+================================================================================
+
+fun nonce_to_bitstring(nonce): bitstring [data,typeConverter].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (options
+        (option)
+        (option)))))
+
+================================================================================
+function declaration (arity 2, no options)
+================================================================================
+
+fun enc(key, bitstring): bitstring.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))
+
+================================================================================
+function declaration (arity 2, with options)
+================================================================================
+
+fun channel_with_host(host, channel): channel [data].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid)
+      (typeid)
+      (options
+        (option)))))
+
+================================================================================
+function macro definition (arity 1)
+================================================================================
+
+letfun salted_hash(x: bitstring) = new salt: bitstring; hash_with_salt(salt, x).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_macro_def
+      (ident)
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (pterm
+        (ident)
+        (typeid
+          (ident))
+        (pterm
+          (pterm_function_call
+            (ident)
+            (pterm
+              (ident))
+            (pterm
+              (ident))))))))
+
+================================================================================
+function macro definition (arity 2)
+================================================================================
+
+letfun encrypt(x: bitstring, y: key) = new r: sseed; internal_encrypt(x,y,r).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_macro_def
+      (ident)
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (pterm
+        (ident)
+        (typeid
+          (ident))
+        (pterm
+          (pterm_function_call
+            (ident)
+            (pterm
+              (ident))
+            (pterm
+              (ident))
+            (pterm
+              (ident))))))))
+
+================================================================================
+reduc declaration
+================================================================================
+
+reduc forall y: skey, x: bitstring; decA(y, A(pk(y),x)) = x.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (eqlist
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (equality
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))
+            (term
+              (term_function_call
+                (ident)
+                (term
+                  (term_function_call
+                    (ident)
+                    (term
+                      (ident))))
+                (term
+                  (ident))))))
+        (term
+          (ident))))))
+
+================================================================================
+function declaration with reduction
+================================================================================
+
+fun idec (bitstring, key): nat
+reduc forall x:nat, y:key; idec(ienc(x+1, y), y) = x.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (mayfailreduc
+        (failtypedecl
+          (ident)
+          (typeid
+            (ident))
+          (ident)
+          (typeid
+            (ident)))
+        (mayfailequality
+          (ident)
+          (mayfailterm
+            (term
+              (term_function_call
+                (ident)
+                (term
+                  (term
+                    (ident))
+                  (nat))
+                (term
+                  (ident)))))
+          (mayfailterm
+            (term
+              (ident)))
+          (mayfailterm
+            (term
+              (ident))))))))
+
+================================================================================
+equation declaration
+================================================================================
+
+equation forall k: key, v: bitstring; D(k,E(k,v)) = v.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (eqlist
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (equality
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))
+            (term
+              (term_function_call
+                (ident)
+                (term
+                  (ident))
+                (term
+                  (ident))))))
+        (term
+          (ident))))))
+
+================================================================================
+predicate declaration
+================================================================================
+
+pred member(key, keyset).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_pred
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))
+
+================================================================================
+table declaration
+================================================================================
+
+table keys(host, key).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_table
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))
+
+================================================================================
+process macro declaration
+================================================================================
+
+let foobar(x:bitstring) =
+    out(c, x).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_process_macro
+      (ident)
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (process
+        (process_item
+          (process_output
+            (pterm
+              (ident))
+            (pterm
+              (ident))))))))
+
+================================================================================
+setting declaration
+================================================================================
+
+set attacker = passive.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (name
+      (ident))
+    (value
+      (ident))))
+
+================================================================================
+event declaration
+================================================================================
+
+event send_msg(t_id, t_id, t_AMS_Time, t_Rand32, t_policy_id, t_AMS_Policy, t_EncAlgo, t_Count, bitstring).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_event
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))
+
+================================================================================
+query declaration (attacker)
+================================================================================
+
+query attacker(M).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_query
+      (query
+        (gterm
+          (gterm_function_call
+            (ident)
+            (gterm
+              (ident))))))))
+
+================================================================================
+query declaration (WooLamPK-corr.pv example)
+================================================================================
+
+query x: host, y: host; inj-event(endBparam(x,y)) ==> inj-event(beginBparam(x,y)).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_query
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (query
+        (gterm
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))))))
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident)))))))))))
+
+================================================================================
+query declaration (JFKr.m4.pv example)
+================================================================================
+
+  (* Denial of service for I. *)
+  query XkAminus: skey, XIDA: pkey, XinitA: channel, XacceptA: channel, XconnectA: channel, XSIA: idset, XNI: nonce, XNR: nonce, XxR: G, XgrpinfoR: grpinfo, XtR: key, XxI: G, XIDRp: pkey, XsaI: sainfo;
+    inj-event(enddosi(XIDA, XNI)) ==>
+    (inj-event(mess2rec(XIDA, XNI, XNR, XxR, XgrpinfoR, XtR, XxI, XIDRp, XsaI)) ==>
+    (inj-event(mess1(XIDA, XNI, XxI, XinitA, XIDRp, XsaI)) ==>
+     inj-event(initev(XinitA, XIDRp, XsaI))))
+   && event(princ(XkAminus, XIDA, XinitA, XacceptA, XconnectA, XSIA)).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (decl
+    (decl_query
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid)
+        (ident)
+        (typeid)
+        (ident)
+        (typeid)
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (query
+        (gterm
+          (gterm
+            (gterm
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))))))
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm_function_call
+                      (ident)
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (gterm
+                          (gterm
+                            (gterm
+                              (gterm
+                                (gterm
+                                  (gterm
+                                    (ident))
+                                  (gterm
+                                    (ident)))
+                                (gterm
+                                  (ident)))
+                              (gterm
+                                (ident)))
+                            (gterm
+                              (ident)))
+                          (gterm
+                            (ident)))
+                        (gterm
+                          (ident))))))
+                (gterm
+                  (gterm
+                    (gterm
+                      (gterm
+                        (gterm_function_call
+                          (ident)
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (gterm
+                              (gterm
+                                (gterm
+                                  (ident))
+                                (gterm
+                                  (ident)))
+                              (gterm
+                                (ident)))
+                            (gterm
+                              (ident))))))
+                    (gterm
+                      (gterm
+                        (gterm_function_call
+                          (ident)
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))))))))))
+          (infix)
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))
+                (gterm
+                  (gterm
+                    (gterm
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))
+                    (gterm
+                      (ident)))
+                  (gterm
+                    (ident)))))))))))
+
+================================================================================
+axiom declaration (key-registration-locked.pv example)
+================================================================================
+
+axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, j:nat, j':nat,A:agent, k:bitstring,A':agent, k':bitstring;
+  event(TestValid(i',k)) && event(InValid(i,sks,A,k)) ==> i > i';
+  event(TestRevoked(i',id,k)) && event(InRevoked(i,sks,A,k)) ==> i > i';
+  event(InValid(i,sks,A,k)) && event(InValid(i,sks',A',k')) ==> (sks,A,k) = (sks',A',k');
+  event(InRevoked(i,sks,A,k)) && event(InRevoked(i,sks',A',k')) ==> (sks,A,k) = (sks',A',k') [fullSat].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident)))
+    (lemma
+      (gterm
+        (gterm
+          (gterm
+            (gterm
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))))))
+            (infix)
+            (gterm
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident)))))))
+          (gterm
+            (ident)))
+        (infix)
+        (gterm
+          (ident)))
+      (lemma
+        (gterm
+          (gterm
+            (gterm
+              (gterm
+                (gterm
+                  (gterm_function_call
+                    (ident)
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident)))))
+              (infix)
+              (gterm
+                (gterm
+                  (gterm_function_call
+                    (ident)
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))
+                    (gterm
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))))))
+            (gterm
+              (ident)))
+          (infix)
+          (gterm
+            (ident)))
+        (lemma
+          (gterm
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm_function_call
+                      (ident)
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (gterm
+                          (ident))
+                        (gterm
+                          (ident))))))
+                (infix)
+                (gterm
+                  (gterm
+                    (gterm_function_call
+                      (ident)
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (gterm
+                          (ident))
+                        (gterm
+                          (ident)))))))
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident)))
+                  (gterm
+                    (ident)))))
+            (infix)
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident)))
+                (gterm
+                  (ident)))))
+          (lemma
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm
+                      (gterm_function_call
+                        (ident)
+                        (gterm
+                          (ident))
+                        (gterm
+                          (ident))
+                        (gterm
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))))))
+                  (infix)
+                  (gterm
+                    (gterm
+                      (gterm_function_call
+                        (ident)
+                        (gterm
+                          (ident))
+                        (gterm
+                          (ident))
+                        (gterm
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident)))))))
+                (gterm
+                  (gterm
+                    (gterm
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))
+                    (gterm
+                      (ident)))))
+              (infix)
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident)))
+                  (gterm
+                    (ident)))))))))
+    (options
+      (option))))
+
+================================================================================
+lemma declaration (yubikey-less-axioms.pv example)
+================================================================================
+
+lemma pid:bitstring, k:bitstring, i:nat, i':nat, x:nat, x':nat;
+ event(Login(pid,k,i,x)) && event(Login(pid,k,i',x')) ==> (i = i' && x = x') || (i < i' && x < x') || (i > i' && x > x').
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident)))
+    (lemma
+      (gterm
+        (gterm
+          (gterm
+            (gterm
+              (gterm
+                (gterm
+                  (gterm_function_call
+                    (ident)
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))
+                    (gterm
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))))))
+              (infix)
+              (gterm
+                (gterm
+                  (gterm_function_call
+                    (ident)
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident))
+                    (gterm
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))))))
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (gterm
+                      (ident))
+                    (infix)
+                    (gterm
+                      (ident)))
+                  (infix)
+                  (gterm
+                    (ident)))
+                (infix)
+                (gterm
+                  (ident)))))
+          (infix)
+          (gterm
+            (gterm
+              (gterm
+                (gterm
+                  (gterm
+                    (ident))
+                  (infix)
+                  (gterm
+                    (ident)))
+                (infix)
+                (gterm
+                  (ident)))
+              (infix)
+              (gterm
+                (ident)))))
+        (infix)
+        (gterm
+          (gterm
+            (gterm
+              (gterm
+                (gterm
+                  (ident))
+                (infix)
+                (gterm
+                  (ident)))
+              (infix)
+              (gterm
+                (ident)))
+            (infix)
+            (gterm
+              (ident))))))))
+
+================================================================================
+noninterf declaration
+================================================================================
+
+noninterf secretA, secretB.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (nidecl
+      (ident))
+    (nidecl
+      (ident))))
+
+================================================================================
+weaksecret declaration
+================================================================================
+
+weaksecret w.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (ident)))
+
+================================================================================
+not declaration
+================================================================================
+
+not attacker(new dhsecretC).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (gterm
+      (gterm_function_call
+        (ident)
+        (gterm
+          (ident))))))
+
+================================================================================
+select declaration (basic)
+================================================================================
+
+select i:nat; mess(new d,i).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))))
+
+================================================================================
+select declaration (extended)
+================================================================================
+
+select i:nat; mess(new d,i) [inductionOn=i].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))
+    (nounifoption
+      (ident))))
+
+================================================================================
+noselect declaration (basic)
+================================================================================
+
+noselect i:nat; mess(new d,i).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))))
+
+================================================================================
+noselect declaration (extended)
+================================================================================
+
+noselect i:nat; mess(new d,i) [inductionOn=i].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))
+    (nounifoption
+      (ident))))
+
+================================================================================
+noselect declaration (basic)
+================================================================================
+
+nounif i:nat; mess(new d,i).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))))
+
+================================================================================
+noselect declaration (extended)
+================================================================================
+
+nounif i:nat; mess(new d,i) [inductionOn=i].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (typedecl
+      (ident)
+      (typeid
+        (ident)))
+    (nounifdecl
+      (gformat_function_call
+        (ident)
+        (gformat
+          (ident))
+        (gformat
+          (ident))))
+    (nounifoption
+      (ident))))
+
+================================================================================
+elimtrue declaration (from Chapter 6.3 Predicates of the manual)
+================================================================================
+
+pred p(bitstring, bitstring).
+elimtrue x: bitstring, y: bitstring; p(x, y).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_pred
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))))
+  (decl
+    (failtypedecl
+      (ident)
+      (typeid
+        (ident))
+      (ident)
+      (typeid
+        (ident)))
+    (term
+      (term_function_call
+        (ident)
+        (term
+          (ident))
+        (term
+          (ident))))))
+
+================================================================================
+clauses declaration (from JFKi.m4.pv)
+================================================================================
+
+clauses
+  forall x: key, y: keyset; member(x,consset(x,y));
+  forall x: key, y: keyset, z: key; member(x,y) -> member(x,consset(z,y)).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (clauses
+      (failtypedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (clause
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))
+            (term
+              (term_function_call
+                (ident)
+                (term
+                  (ident))
+                (term
+                  (ident)))))))
+      (clauses
+        (failtypedecl
+          (ident)
+          (typeid
+            (ident))
+          (ident)
+          (typeid
+            (ident))
+          (ident)
+          (typeid
+            (ident)))
+        (clause
+          (term
+            (term_function_call
+              (ident)
+              (term
+                (ident))
+              (term
+                (ident))))
+          (term
+            (term_function_call
+              (ident)
+              (term
+                (ident))
+              (term
+                (term_function_call
+                  (ident)
+                  (term
+                    (ident))
+                  (term
+                    (ident)))))))))))
+
+================================================================================
+param declaration (from needham-schroeder-pkcorrAuth.pcv)
+================================================================================
+
+param NA, NB, NS, NK.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (ident)
+    (ident)
+    (ident)
+    (ident)))
+
+================================================================================
+proba declaration
+================================================================================
+
+proba Penc.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (ident))))
+
+================================================================================
+proba declaration
+================================================================================
+
+proba pCDH.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (ident))))
+
+================================================================================
+letproba declaration
+================================================================================
+
+letproba Penc_multikey(t:time,N,N2,N3,N4:number,lenc,ldec:length) =
+  N3 * (N + N4) * Penc(t + (N4+N-1) * time(enc_r, lenc) +
+  (N3-1)*(time(pkgen) + time(skgen) + N2 * time(dec, ldec) + N * time(enc_r, lenc)), N2).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (ident)
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (ident)
+        (ident)
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (ident)
+        (typeid
+          (ident))))))
+
+================================================================================
+proof declaration (needham-schroeder-skcorrFull.pcv example)
+================================================================================
+
+proof {
+crypto int_ctxt(enc) Kas_1; (* applying that first allows to prove event(fullA(B,k,x)) && event(fullB(A,k',x)) ==> k = k' *)
+auto;
+out_game "g1.cv";
+crypto int_ctxt_corrupt(enc) k_9; (* we need the _corrupt version because k_9 = keyA may leak *)
+success (* proves inj-event(partA(B,x)) ==> inj-event(partB(A,x)) *)
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (proof))))
+
+================================================================================
+def declaration (empty_def_cond.cv CryptoVerif example)
+================================================================================
+
+def IND_CCA2_public_key_enc_all_args_EC(keyseed, pkey, skey, cleartext, ciphertext, enc_seed, skgen, skgen2, pkgen, pkgen2, enc, enc_r, enc_r2, dec, dec2, injbot, Z, Penc, Penccoll) {
+
+param N, N', N2, N3, N4.
+
+fun enc_r(cleartext, pkey, enc_seed): ciphertext.
+fun skgen(keyseed):skey.
+fun pkgen(keyseed):pkey.
+fun dec(ciphertext, skey): bitstringbot.
+
+fun enc_r2(cleartext, pkey, enc_seed): ciphertext.
+fun skgen2(keyseed):skey.
+fun pkgen2(keyseed):pkey.
+fun dec2(ciphertext, skey): bitstringbot.
+
+letfun enc(m: cleartext, pk: pkey) =
+       r <-R enc_seed; enc_r(m,pk,r).
+
+fun injbot(cleartext):bitstringbot [data].
+
+(* The function Z returns for each bitstring, a bitstring
+   of the same length, consisting only of zeroes. *)
+fun Z(cleartext):cleartext.
+
+equation forall m:cleartext, r:keyseed, r2:enc_seed; 
+	dec(enc_r(m, pkgen(r), r2), skgen(r)) = injbot(m).
+equation forall m:cleartext, r:keyseed, r2:enc_seed; 
+	dec2(enc_r2(m, pkgen2(r), r2), skgen2(r)) = injbot(m).
+
+
+(* Version with N enc oracle calls *)
+
+event e.
+param N0.
+
+fun f(ciphertext): ciphertext.
+
+equiv(eqec)
+       foreach i0 <= N0 do r <-R keyseed; (
+           Opk() := return(pkgen(r)) |
+	   foreach i2 <= N2 do Odec(c:ciphertext) := return(dec(c, skgen(r))) |
+           foreach i <= N do r1 <-R enc_seed; Oenc(m:cleartext) [useful_change] := return(enc_r(m, pkgen(r),r1)))
+     <=(N * Penc(time + (N-1) * time(enc_r, maxlength(m)), N2))=> [manual]
+       foreach i0 <= N0 do r <-R keyseed; (
+           Opk() := return(pkgen(r)) |
+	   foreach i2 <= N2 do Odec(c:ciphertext) :=
+                find suchthat c = f(c) then
+		   event_abort e 
+		else
+		   return(dec(c, skgen(r))) |
+	   foreach i <= N do r1 <-R enc_seed; Oenc(m:cleartext) :=
+			c1:ciphertext <- enc_r2(Z(m), pkgen(r), r1);
+			return(c1)).
+
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (def))))
+
+================================================================================
+expand declaration (signedDH.pcv example)
+================================================================================
+
+expand DH_proba_collision(G, Z, g, exp, exp', mult, PCollKey1, PCollKey2).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_cryptoverif
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident)))))

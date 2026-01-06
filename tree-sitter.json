@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "proverif",
+      "camelcase": "ProVerif",
+      "title": "ProVerif",
+      "scope": "source.proverif",
+      "file-types": [
+        "pv"
+      ],
+      "injection-regex": "^proverif$",
+      "class-name": "TreeSitterProverif"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.1",
+    "license": "0BSD",
+    "description": "ProVerif's typed pi calculus grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Marian Buschsieweke",
+        "email": "marian.buschsieweke@posteo.net",
+        "url": "https://mari-bu.de/"
+      }
+    ],
+    "links": {
+      "repository": "https://codeberg.org/maribu/tree-sitter-proverif"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": false,
+    "zig": false
+  }
+}
