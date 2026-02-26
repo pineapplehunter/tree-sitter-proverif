@@ -9,6 +9,7 @@
       "file-types": [
         "pv"
       ],
+      "highlights": "queries/highlights.scm",
       "injection-regex": "^proverif$",
       "class-name": "TreeSitterProverif"
     }
