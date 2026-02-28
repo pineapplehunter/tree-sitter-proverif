@@ -1,3 +1,6 @@
+;; fallback for identifiers
+(ident) @variable
+
 ;; Comments
 
 (comment) @comment
@@ -63,16 +66,19 @@
 (process_function_call
  (pterm (ident) @variable.parameter))
 
-(process_input) @function.builtin
+(process_input "in" @function.builtin)
 (process_input
  (pterm (ident) @variable.parameter))
-(process_output) @function.builtin
+(process_input
+ (pattern (ident) @variable.parameter))
+(process_input
+ (pattern (pattern (ident) @variable.parameter)))
+
+(process_output "out" @function.builtin)
 (process_output
  (pterm (ident) @variable.parameter))
-
-
-;; fallback for identifiers
-(ident) @variable
+(process_output
+ (pterm (pterm (ident) @variable.parameter)))
 
 ;; Literals
 
@@ -147,8 +153,8 @@
   "yield"
 ] @keyword
 
-(decl_channel "channel") @keyword ; "channel" can also be used as type, hence the restriction
-(process_let "in") @keyword ; "in" can is keyword in "let ... in", but builtin function otherwise
+(decl_channel "channel" @keyword) ; "channel" can also be used as type, hence the restriction
+(process_let "in" @keyword) ; "in" can is keyword in "let ... in", but builtin function otherwise
 
 ;; Operators
 
