@@ -1,0 +1,17 @@
+# Merge these entries into Helix's languages.toml, keeping your other languages.
+[[grammar]]
+name = "proverif"
+# REQUIRED: replace this with the absolute path to your improved checkout.
+source = { path = "/absolute/path/to/tree-sitter-proverif" }
+# After publishing your changes, you can instead pin YOUR fork and commit:
+# source = { git = "https://github.com/YOUR-NAME/tree-sitter-proverif", rev = "FULL-COMMIT-HASH" }
+
+[[language]]
+name = "proverif"
+scope = "source.proverif"
+injection-regex = "^proverif$"
+file-types = ["pv"]
+comment-tokens = ["#"]
+block-comment-tokens = { start = "(*", end = "*)" }
+grammar = "proverif"
+indent = { tab-width = 2, unit = "  " }

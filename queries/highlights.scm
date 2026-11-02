@@ -13,6 +13,12 @@
 (type_def
   name: (ident) @type)
 
+(decl_const
+  (ident) @constant)
+
+(decl_free
+  (ident) @variable)
+
 (typeid) @type
 (typeid
   (ident) @type)
@@ -113,6 +119,7 @@
   "expand"
   "fail"
   "forall"
+  "for"
   "foreach"
   "free"
   "fun"
@@ -173,6 +180,7 @@
   "->"
   "<->"
   "<=>"
+  "/"
   "||"
   "&&"
   "|"
