@@ -636,19 +636,17 @@ query x: host, y: host; inj-event(endBparam(x,y)) ==> inj-event(beginBparam(x,y)
               (gterm_function_call
                 (ident)
                 (gterm
-                  (gterm
-                    (ident))
-                  (gterm
-                    (ident))))))
+                  (ident))
+                (gterm
+                  (ident)))))
           (gterm
             (gterm
               (gterm_function_call
                 (ident)
                 (gterm
-                  (gterm
-                    (ident))
-                  (gterm
-                    (ident)))))))))))
+                  (ident))
+                (gterm
+                  (ident))))))))))
 
 ================================================================================
 query declaration (JFKr.m4.pv example)
@@ -712,14 +710,13 @@ query declaration (JFKr.m4.pv example)
         (gterm
           (gterm
             (gterm
-              (gterm
-                (gterm_function_call
-                  (ident)
-                  (gterm
-                    (gterm
-                      (ident))
-                    (gterm
-                      (ident))))))
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident))
+                (gterm
+                  (ident)))))
+          (gterm
             (gterm
               (gterm
                 (gterm
@@ -731,74 +728,61 @@ query declaration (JFKr.m4.pv example)
                       (gterm
                         (ident))
                       (gterm
-                        (gterm
-                          (gterm
-                            (gterm
-                              (gterm
-                                (gterm
-                                  (gterm
-                                    (ident))
-                                  (gterm
-                                    (ident)))
-                                (gterm
-                                  (ident)))
-                              (gterm
-                                (ident)))
-                            (gterm
-                              (ident)))
-                          (gterm
-                            (ident)))
-                        (gterm
-                          (ident))))))
-                (gterm
-                  (gterm
-                    (gterm
-                      (gterm
-                        (gterm_function_call
-                          (ident)
-                          (gterm
-                            (ident))
-                          (gterm
-                            (ident))
-                          (gterm
-                            (gterm
-                              (gterm
-                                (gterm
-                                  (ident))
-                                (gterm
-                                  (ident)))
-                              (gterm
-                                (ident)))
-                            (gterm
-                              (ident))))))
-                    (gterm
-                      (gterm
-                        (gterm_function_call
-                          (ident)
-                          (gterm
-                            (ident))
-                          (gterm
-                            (ident))
-                          (gterm
-                            (ident))))))))))
-          (infix)
-          (gterm
-            (gterm
-              (gterm_function_call
-                (ident)
-                (gterm
-                  (ident))
-                (gterm
-                  (ident))
-                (gterm
-                  (gterm
-                    (gterm
+                        (ident))
                       (gterm
                         (ident))
                       (gterm
-                        (ident)))
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))))
+                (gterm
+                  (gterm
                     (gterm
-                      (ident)))
+                      (gterm
+                        (gterm_function_call
+                          (ident)
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident)))))
+                    (gterm
+                      (gterm
+                        (gterm_function_call
+                          (ident)
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident))
+                          (gterm
+                            (ident)))))))))
+            (gterm
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
                   (gterm
                     (ident)))))))))))
 
@@ -858,15 +842,32 @@ axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, 
         (gterm
           (gterm
             (gterm
-              (gterm
-                (gterm_function_call
-                  (ident)
-                  (gterm
-                    (gterm
-                      (ident))
-                    (gterm
-                      (ident))))))
-            (infix)
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident))
+                (gterm
+                  (ident)))))
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))))))
+        (gterm
+          (gterm
+            (ident))
+          (gterm
+            (ident))))
+      (lemma
+        (gterm
+          (gterm
             (gterm
               (gterm
                 (gterm_function_call
@@ -876,30 +877,39 @@ axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, 
                   (gterm
                     (ident))
                   (gterm
-                    (gterm
-                      (ident))
-                    (gterm
-                      (ident)))))))
+                    (ident)))))
+            (gterm
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))))))
           (gterm
-            (ident)))
-        (infix)
-        (gterm
-          (ident)))
-      (lemma
-        (gterm
+            (gterm
+              (ident))
+            (gterm
+              (ident))))
+        (lemma
           (gterm
             (gterm
               (gterm
                 (gterm
                   (gterm_function_call
                     (ident)
+                    (gterm
+                      (ident))
                     (gterm
                       (ident))
                     (gterm
                       (ident))
                     (gterm
                       (ident)))))
-              (infix)
               (gterm
                 (gterm
                   (gterm_function_call
@@ -909,46 +919,10 @@ axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, 
                     (gterm
                       (ident))
                     (gterm
-                      (gterm
-                        (ident))
-                      (gterm
-                        (ident)))))))
+                      (ident))
+                    (gterm
+                      (ident))))))
             (gterm
-              (ident)))
-          (infix)
-          (gterm
-            (ident)))
-        (lemma
-          (gterm
-            (gterm
-              (gterm
-                (gterm
-                  (gterm
-                    (gterm_function_call
-                      (ident)
-                      (gterm
-                        (ident))
-                      (gterm
-                        (ident))
-                      (gterm
-                        (gterm
-                          (ident))
-                        (gterm
-                          (ident))))))
-                (infix)
-                (gterm
-                  (gterm
-                    (gterm_function_call
-                      (ident)
-                      (gterm
-                        (ident))
-                      (gterm
-                        (ident))
-                      (gterm
-                        (gterm
-                          (ident))
-                        (gterm
-                          (ident)))))))
               (gterm
                 (gterm
                   (gterm
@@ -957,48 +931,44 @@ axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, 
                     (gterm
                       (ident)))
                   (gterm
-                    (ident)))))
-            (infix)
-            (gterm
+                    (ident))))
               (gterm
                 (gterm
                   (gterm
-                    (ident))
+                    (gterm
+                      (ident))
+                    (gterm
+                      (ident)))
                   (gterm
-                    (ident)))
-                (gterm
-                  (ident)))))
+                    (ident))))))
           (lemma
             (gterm
               (gterm
                 (gterm
                   (gterm
-                    (gterm
-                      (gterm_function_call
-                        (ident)
-                        (gterm
-                          (ident))
-                        (gterm
-                          (ident))
-                        (gterm
-                          (gterm
-                            (ident))
-                          (gterm
-                            (ident))))))
-                  (infix)
+                    (gterm_function_call
+                      (ident)
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))))
+                (gterm
                   (gterm
-                    (gterm
-                      (gterm_function_call
-                        (ident)
-                        (gterm
-                          (ident))
-                        (gterm
-                          (ident))
-                        (gterm
-                          (gterm
-                            (ident))
-                          (gterm
-                            (ident)))))))
+                    (gterm_function_call
+                      (ident)
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident))))))
+              (gterm
                 (gterm
                   (gterm
                     (gterm
@@ -1007,17 +977,16 @@ axiom sks:bitstring,sks':bitstring, id:bitstring, id':bitstring, i:nat, i':nat, 
                       (gterm
                         (ident)))
                     (gterm
-                      (ident)))))
-              (infix)
-              (gterm
+                      (ident))))
                 (gterm
                   (gterm
                     (gterm
-                      (ident))
+                      (gterm
+                        (ident))
+                      (gterm
+                        (ident)))
                     (gterm
-                      (ident)))
-                  (gterm
-                    (ident)))))))))
+                      (ident))))))))))
     (options
       (option))))
 
@@ -1056,80 +1025,66 @@ lemma pid:bitstring, k:bitstring, i:nat, i':nat, x:nat, x':nat;
         (gterm
           (gterm
             (gterm
-              (gterm
+              (gterm_function_call
+                (ident)
                 (gterm
-                  (gterm_function_call
-                    (ident)
-                    (gterm
-                      (ident))
-                    (gterm
-                      (ident))
-                    (gterm
-                      (gterm
-                        (ident))
-                      (gterm
-                        (ident))))))
-              (infix)
-              (gterm
+                  (ident))
                 (gterm
-                  (gterm_function_call
-                    (ident)
-                    (gterm
-                      (ident))
-                    (gterm
-                      (ident))
-                    (gterm
-                      (gterm
-                        (ident))
-                      (gterm
-                        (ident)))))))
-            (gterm
-              (gterm
+                  (ident))
                 (gterm
-                  (gterm
-                    (gterm
-                      (ident))
-                    (infix)
-                    (gterm
-                      (ident)))
-                  (infix)
-                  (gterm
-                    (ident)))
-                (infix)
+                  (ident))
                 (gterm
                   (ident)))))
-          (infix)
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))))))
+        (gterm
           (gterm
             (gterm
               (gterm
                 (gterm
                   (gterm
                     (ident))
-                  (infix)
                   (gterm
                     (ident)))
-                (infix)
                 (gterm
-                  (ident)))
-              (infix)
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident)))))
+            (gterm
               (gterm
-                (ident)))))
-        (infix)
-        (gterm
+                (gterm
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident)))
+                (gterm
+                  (gterm
+                    (ident))
+                  (gterm
+                    (ident))))))
           (gterm
             (gterm
               (gterm
                 (gterm
                   (ident))
-                (infix)
                 (gterm
                   (ident)))
-              (infix)
               (gterm
-                (ident)))
-            (infix)
-            (gterm
-              (ident))))))))
+                (gterm
+                  (ident))
+                (gterm
+                  (ident))))))))))
 
 ================================================================================
 noninterf declaration

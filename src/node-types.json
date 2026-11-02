@@ -618,10 +618,6 @@
           "named": true
         },
         {
-          "type": "infix",
-          "named": true
-        },
-        {
           "type": "nat",
           "named": true
         }
@@ -661,11 +657,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "infix",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "lemma",
@@ -1184,10 +1175,6 @@
           "named": true
         },
         {
-          "type": "infix",
-          "named": true
-        },
-        {
           "type": "nat",
           "named": true
         },
@@ -1312,10 +1299,6 @@
       "types": [
         {
           "type": "ident",
-          "named": true
-        },
-        {
-          "type": "infix",
           "named": true
         },
         {

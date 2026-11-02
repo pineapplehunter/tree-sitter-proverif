@@ -1,0 +1,150 @@
+================================================================================
+numerals, tuples, and operator precedence in terms and queries
+================================================================================
+fun pair(bitstring, bitstring): bitstring.
+fun add(nat, nat): nat.
+equation forall x:bitstring, y:bitstring; pair(x,y) = (x,y).
+query attacker((1, 2)); 1 + 2 = 3 && 4 < 5.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))))
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (typeid
+        (ident))))
+  (decl
+    (eqlist
+      (typedecl
+        (ident)
+        (typeid
+          (ident))
+        (ident)
+        (typeid
+          (ident)))
+      (equality
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))
+            (term
+              (ident))))
+        (term
+          (term
+            (ident))
+          (term
+            (ident))))))
+  (decl
+    (decl_query
+      (query
+        (gterm
+          (gterm_function_call
+            (ident)
+            (gterm
+              (gterm
+                (gterm
+                  (nat))
+                (gterm
+                  (nat))))))
+        (gterm
+          (gterm
+            (gterm
+              (nat)
+              (gterm
+                (nat)))
+            (gterm
+              (nat)))
+          (gterm
+            (gterm
+              (nat))
+            (gterm
+              (nat))))))))
+
+================================================================================
+process constructs with replication, conditionals, table operations, and events
+================================================================================
+table entries(bitstring, nat).
+event accepted(bitstring).
+process !in(c, (=tag, x:bitstring));
+  if x = value then
+    insert entries(x, 1);
+    event accepted(x);
+    out(c, (x, 2))
+  else 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_table
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))))
+  (decl
+    (decl_event
+      (ident)
+      (typeid
+        (ident))))
+  (process
+    (process_replication
+      (process
+        (process_item
+          (process_input
+            (pterm
+              (ident))
+            (pattern
+              (pattern
+                (pterm
+                  (ident)))
+              (pattern
+                (ident)
+                (typeid
+                  (ident))))))
+        (process
+          (process_item
+            (pterm
+              (pterm
+                (ident))
+              (pterm
+                (ident)))
+            (process
+              (process_item
+                (ident)
+                (pterm
+                  (ident))
+                (pterm
+                  (nat)))
+              (process
+                (process_item
+                  (ident)
+                  (pterm
+                    (ident)))
+                (process
+                  (process_item
+                    (process_output
+                      (pterm
+                        (ident))
+                      (pterm
+                        (pterm
+                          (ident))
+                        (pterm
+                          (nat))))))))
+            (process
+              (process_final_item))))))))
