@@ -26,7 +26,6 @@ export default grammar({
     [$._typedecl, $.gterm],
     [$._typedecl, $.nidecl],
     [$.gterm],
-    [$.gterm, $.gterm_function_call],
     [$.infix, $.equality],
     [$.pattern],
     [$.process],
@@ -40,7 +39,6 @@ export default grammar({
     [$.process_replication, $.process_get],
     [$.process_replication, $.process_let],
     [$.process_replication],
-    [$.pterm, $.pattern],
     [$.pterm, $.pterm_function_call],
     [$.pterm],
     [$.term],
@@ -54,6 +52,7 @@ export default grammar({
       'clauses',
       'const',
       'def',
+      'diff',
       'do',
       'elimtrue',
       'else',
@@ -81,6 +80,7 @@ export default grammar({
       'not',
       'nounif',
       'otherwise',
+      'or',
       'out',
       'param',
       'phase',
@@ -128,7 +128,10 @@ export default grammar({
     binding: $ => _seq1(';', $._binding),
 
     // From Appendix A in the manual
-    ident: $ => token(/[A-Za-z_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF][A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF'-]*/),
+    // '-' is an operator, never part of an ordinary identifier (x-1).
+    ident: $ => token(/[A-Za-z_][A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF']*/),
+    projection: $ => token(/[0-9]+-proj-[A-Za-z0-9][A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF'-]*/),
+    _choice: $ => choice('choice', 'diff'),
     nat: $ => /\d+/,
     int: $ => /-?\d+/,
     typeid: $ => choice(
@@ -160,6 +163,10 @@ export default grammar({
       'bounded',
       'fixed',
       'large',
+      seq($.ident, optional(seq('=', choice(
+        $.ident,
+        seq('{', _seq1(',', $.ident), '}'),
+      )))),
     ),
     options: $ => seq('[', _seq1(',', $.option), ']'),
     infix: $ => choice(
@@ -175,11 +182,13 @@ export default grammar({
 
     // Figure A.1
     term_function_call: $ => seq(
-      field('name', $.ident), '(', _seq(',', $.term), ')'
+      field('name', choice($.ident, $.projection)), '(', _seq(',', $.term), ')'
     ),
     term: $ => choice(
       $.ident,
       $.nat,
+      'fail',
+      seq($._choice, '[', $.term, ',', $.term, ']'),
       seq('(', _seq(',', $.term), ')'),
       $.term_function_call,
       prec.left(9, seq($.term, choice('+', '-'), $.nat)),
@@ -202,7 +211,7 @@ export default grammar({
       $.nat,
       seq('(', _seq(',', $.pterm), ')'),
       $.pterm_function_call,
-      seq('choice', '[', $.pterm, ',', $.pterm, ']'),
+      seq($._choice, '[', $.pterm, ',', $.pterm, ']'),
       prec.left(9, seq($.pterm, choice('+', '-'), $.nat)),
       prec.left(9, seq($.nat, '+', $.pterm)),
       prec(3, seq($.pterm, '=', $.pterm)),
@@ -257,7 +266,7 @@ export default grammar({
         $.pterm,
         optional(seq('else', $.pterm)),
       ),
-      seq('insert', $.ident, '(', _seq(',', $.pterm), ')'),
+      seq('insert', $.ident, '(', _seq(',', $.pterm), ')', ';', $.pterm),
       seq(
         'get', $.ident, '(', _seq(',', $.pattern), ')',
         optional(seq('suchthat', $.pterm)),
@@ -269,6 +278,7 @@ export default grammar({
         'event',
         $.ident,
         optional(seq('(', _seq(',', $.pterm), ')')),
+        optional(seq('[', _seq(',', $.ident), ']')),
         ';',
         $.pterm,
       ),
@@ -283,15 +293,13 @@ export default grammar({
       seq($.nat, '+', $.pattern),
       seq('(', _seq(',', $.pattern), ')'),
       seq($.ident, '(', _seq(',', $.pattern), ')'),
+      seq($._choice, '[', $.pattern, ',', $.pattern, ']', optional(seq(':', $.typeid))),
       seq('=', $.pterm),
     ),
-    mayfailterm: $ => choice(
-      $.term,
-      'fail',
-    ),
+    mayfailterm: $ => $.term,
     _typedecl: $ => seq(_seq1(',', $.ident), ':', $.typeid),
     typedecl: $ => _seq1(',', $._typedecl),
-    _failtypedecl: $ => seq(_seq1(',', $.ident), ':', choice($.typeid, 'fail')),
+    _failtypedecl: $ => seq(_seq1(',', $.ident), ':', $.typeid, optional(seq('or', 'fail'))),
     failtypedecl: $ => _seq1(',', $._failtypedecl),
 
     // Figure A.2
@@ -306,7 +314,7 @@ export default grammar({
       field('name', $.ident),
       optional(seq(
         '(',
-        $.typedecl,
+        optional($.failtypedecl),
         ')',
       )),
       '=',
@@ -325,9 +333,9 @@ export default grammar({
       optional($.options),
       '.',
     ),
-    /* These statements are CryptoVerif syntax. The ProVerif tool will tolerate
-     * those statements to allow sharing code between CryptoVerif and ProVerif,
-     * but there body is effectively ignored by ProVerif. */
+    /* Compatibility declarations, plus def/expand macros. Probability/proof
+     * declarations are ignored by ProVerif. Macro bodies are still opaque in
+     * this grammar (but are meaningful to ProVerif); see docs/coverage.md. */
     decl_cryptoverif: $=> choice(
       seq(
         'proba',
@@ -374,7 +382,7 @@ export default grammar({
     ),
     decl_process_macro: $ => seq(
       'let', field('name', $.ident),
-      optional(seq('(', $.typedecl, ')')),
+      optional(seq('(', optional($.failtypedecl), ')')),
       '=',
       $.process,
       '.',
@@ -498,11 +506,12 @@ export default grammar({
     equality: $ => choice(
       seq($.term, '=', $.term),
       seq('let', $.ident, '=', $.term, 'in', $.equality),
+      seq($.ident, '<-', $.term, ';', $.equality),
     ),
     mayfailequality: $ => choice(
       seq(
         $.ident, '(',
-        _seq1(',', $.mayfailterm),
+        _seq(',', $.mayfailterm),
         ')',
         '=',
         $.mayfailterm,
@@ -515,6 +524,7 @@ export default grammar({
         'in',
         $.mayfailequality
       ),
+      seq($.ident, '<-', $.term, ';', $.mayfailequality),
     ),
     _eqlist: $ => seq(
       optional(seq('forall', $.typedecl, ';')),
@@ -573,7 +583,7 @@ export default grammar({
       ),
     ),
     gterm_function_call: $ => seq(
-      field('name', $.ident),
+      field('name', choice($.ident, 'table')),
       '(',
       _seq(',', $.gterm),
       ')',
@@ -583,10 +593,10 @@ export default grammar({
     gterm: $ => choice(
       $.ident,
       $.nat,
-      seq('(', $.gterm, ')'),
+      seq('(', optional($.gterm), ')'),
       $.gterm_function_call,
       seq(
-        'choice',
+        $._choice,
         '[',
         $.gterm,
         ',',
@@ -610,12 +620,13 @@ export default grammar({
         ')',
         optional(seq('@', $.ident)),
       ),
+      seq('not', '(', $.gterm, ')'),
       prec.right(0, seq($.gterm, '==>', $.gterm)),
       prec.left(-1, seq($.gterm, ',', $.gterm)),
       seq(
         'new',
         $.ident,
-        optional(seq('[', $.binding, ']')),
+        optional(seq('[', optional($.binding), ']')),
       ),
       seq(
         'let',
@@ -625,6 +636,7 @@ export default grammar({
         'in',
         $.gterm,
       ),
+      seq($.ident, '<-', $.gterm, ';', $.gterm),
     ),
 
     // Figure A.6
@@ -637,13 +649,16 @@ export default grammar({
       ),
     ),
     gformat_function_call: $ => seq(
-      field('name', $.ident), '(', _seq(',', $.gformat), ')'
+      field('name', choice($.ident, 'table', 'event')), '(', _seq(',', $.gformat), ')'
     ),
     gformat: $ => choice(
       $.ident,
+      $.nat,
+      prec.left(9, seq($.gformat, '+', $.nat)),
+      prec.left(9, seq($.nat, '+', $.gformat)),
       seq('*', $.ident),
       $.gformat_function_call,
-      seq('choice', '[', $.gformat, ',', $.gformat, ']'),
+      seq($._choice, '[', $.gformat, ',', $.gformat, ']'),
       seq('not', '(', _seq(',', $.gformat), ')'),
       seq('(', _seq(',', $.gformat), ')'),
       seq(
@@ -656,6 +671,7 @@ export default grammar({
         ))
       ),
       seq('let', $.ident, '=', $.gformat, 'in', $.gformat),
+      seq($.ident, '<-', $.gformat, ';', $.gformat),
     ),
     nounifoption: $ => choice(
       'hypothesis',
@@ -663,6 +679,7 @@ export default grammar({
       'ignoreAFewTimes',
       seq('inductionOn', '=', $.ident),
       seq('inductionOn', '=', '{', _seq1(',', $.ident), '}'),
+      $.option,
     ),
 
     // Figure A.7
@@ -694,7 +711,6 @@ export default grammar({
       $.typeid,
     )),
     process_item: $ => choice(
-      seq('!', $.ident, '<=', $.ident),
       seq($.ident, '<-R', $.typeid, optional(seq(';', $.process))),
       seq('if', $.pterm, 'then', $.process, optional(seq('else', $.process))),
       $.process_input,
@@ -706,6 +722,7 @@ export default grammar({
         'event',
         $.ident,
         optional(seq('(', _seq(',', $.pterm), ')')),
+        optional(seq('[', _seq(',', $.ident), ']')),
       ),
       seq('phase', $.nat),
       seq(
@@ -725,7 +742,7 @@ export default grammar({
     ),
     process_replication: $ => choice(
       seq($.process, '|', $.process),
-      seq('!', $.process),
+      seq('!', optional(seq($.ident, '<=', $.ident)), $.process),
     ),
     process_let: $ => choice(
       seq(

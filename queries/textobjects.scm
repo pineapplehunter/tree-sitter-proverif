@@ -2,6 +2,10 @@
 (decl) @entry.around
 (process) @function.around
 
+(function_def) @function.around
+(function_macro_def
+  (pterm) @function.inside) @function.around
+
 ; The body of a declared process macro is its editable interior.
 (decl_process_macro
   (process) @function.inside) @function.around

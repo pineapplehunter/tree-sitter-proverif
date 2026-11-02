@@ -48,7 +48,8 @@ process foreach i <= n do !event reached(successor(zero())); sync 1[tag]; 0
           (mayfailterm
             (term
               (ident)))
-          (mayfailterm)))))
+          (mayfailterm
+            (term))))))
   (decl
     (decl_event
       (ident)

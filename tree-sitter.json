@@ -7,7 +7,8 @@
       "title": "ProVerif",
       "scope": "source.proverif",
       "file-types": [
-        "pv"
+        "pv",
+        "pvl"
       ],
       "highlights": "queries/highlights.scm",
       "injection-regex": "^proverif$",

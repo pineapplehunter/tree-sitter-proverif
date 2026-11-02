@@ -1,0 +1,313 @@
+================================================================================
+Empty macros, may-fail variables, reductions, choices and projections
+================================================================================
+fun f(bitstring): bitstring
+  reduc forall x: bitstring or fail; f(x) = fail
+  otherwise f() = diff[a, b].
+letfun identity(x: bitstring or fail) = x.
+let empty() = 0.
+equation forall x: bitstring; y <- 1-proj-bitstring(x); f(y) = choice[a, b].
+reduc forall x: bitstring; f(x) = x; f(a) = b.
+process empty()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (mayfailreduc
+        (failtypedecl
+          (ident)
+          (typeid
+            (ident)))
+        (mayfailequality
+          (ident)
+          (mayfailterm
+            (term
+              (ident)))
+          (mayfailterm
+            (term)))
+        (mayfailequality
+          (ident)
+          (mayfailterm
+            (term
+              (term
+                (ident))
+              (term
+                (ident))))))))
+  (decl
+    (function_macro_def
+      (ident)
+      (failtypedecl
+        (ident)
+        (typeid
+          (ident)))
+      (pterm
+        (ident))))
+  (decl
+    (decl_process_macro
+      (ident)
+      (process
+        (process_final_item))))
+  (decl
+    (eqlist
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (equality
+        (ident)
+        (term
+          (term_function_call
+            (projection)
+            (term
+              (ident))))
+        (equality
+          (term
+            (term_function_call
+              (ident)
+              (term
+                (ident))))
+          (term
+            (term
+              (ident))
+            (term
+              (ident)))))))
+  (decl
+    (eqlist
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (equality
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))))
+        (term
+          (ident)))
+      (equality
+        (term
+          (term_function_call
+            (ident)
+            (term
+              (ident))))
+        (term
+          (ident)))))
+  (process
+    (process_final_item
+      (process_function_call
+        (ident)))))
+
+================================================================================
+Query builtins, assignments, empty names and tuples, format arithmetic
+================================================================================
+query x: bitstring; not(attacker(x)) ==> table(store(x)) phase 1.
+query attacker(()); attacker(new n[]); y <- x; attacker(y).
+nounif table(store( *x)) phase 1 [hypothesis].
+nounif event(e(1 + x)) [conclusion].
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_query
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (query
+        (gterm
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident)))))
+          (gterm
+            (gterm_function_call
+              (gterm
+                (gterm_function_call
+                  (ident)
+                  (gterm
+                    (ident))))
+              (nat)))))))
+  (decl
+    (decl_query
+      (query
+        (gterm
+          (gterm_function_call
+            (ident)
+            (gterm)))
+        (gterm
+          (gterm_function_call
+            (ident)
+            (gterm
+              (ident))))
+        (gterm
+          (ident)
+          (gterm
+            (ident))
+          (gterm
+            (gterm_function_call
+              (ident)
+              (gterm
+                (ident))))))))
+  (decl
+    (nounifdecl
+      (gformat_function_call
+        (gformat
+          (gformat_function_call
+            (ident)
+            (gformat
+              (ident)))))
+      (nat))
+    (nounifoption))
+  (decl
+    (nounifdecl
+      (gformat_function_call
+        (gformat
+          (gformat_function_call
+            (ident)
+            (gformat
+              (nat)
+              (gformat
+                (ident)))))))
+    (nounifoption)))
+
+================================================================================
+Typed choice patterns, bounded replication, event arguments and process terms
+================================================================================
+letfun store(x: bitstring) = insert cache(x); event stored(x)[x]; x.
+process
+  !i <= N
+  in(c, (diff[x, y]: bitstring, _: bitstring));
+  event stored(x)[x];
+  let z = store(x) in out(c, z)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_macro_def
+      (ident)
+      (failtypedecl
+        (ident)
+        (typeid
+          (ident)))
+      (pterm
+        (ident)
+        (pterm
+          (ident))
+        (pterm
+          (ident)
+          (pterm
+            (ident))
+          (ident)
+          (pterm
+            (ident))))))
+  (process
+    (process_replication
+      (ident)
+      (ident)
+      (process
+        (process_item
+          (process_input
+            (pterm
+              (ident))
+            (pattern
+              (pattern
+                (pattern
+                  (ident))
+                (pattern
+                  (ident))
+                (typeid
+                  (ident)))
+              (pattern
+                (ident)
+                (typeid
+                  (ident))))))
+        (process
+          (process_item
+            (ident)
+            (pterm
+              (ident))
+            (ident))
+          (process
+            (process_let
+              (pattern
+                (ident))
+              (pterm
+                (pterm_function_call
+                  (ident)
+                  (pterm
+                    (ident))))
+              (process
+                (process_item
+                  (process_output
+                    (pterm
+                      (ident))
+                    (pterm
+                      (ident))))))))))))
+
+================================================================================
+Generic declaration options and subtraction without spaces
+================================================================================
+fun f(nat): nat [custom, inductionOn={x,y}, option=value].
+letfun previous(x: nat) = x-1.
+let p() = out(c, 1); 0.
+process p()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (options
+        (option
+          (ident))
+        (option
+          (ident)
+          (ident)
+          (ident))
+        (option
+          (ident)
+          (ident)))))
+  (decl
+    (function_macro_def
+      (ident)
+      (failtypedecl
+        (ident)
+        (typeid
+          (ident)))
+      (pterm
+        (pterm
+          (ident))
+        (nat))))
+  (decl
+    (decl_process_macro
+      (ident)
+      (process
+        (process_item
+          (process_output
+            (pterm
+              (ident))
+            (pterm
+              (nat))))
+        (process
+          (process_final_item)))))
+  (process
+    (process_final_item
+      (process_function_call
+        (ident)))))

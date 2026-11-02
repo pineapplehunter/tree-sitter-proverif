@@ -5,9 +5,9 @@
 
 (comment) @comment
 
-; CryptoVerif-only opaque blocks
+; CryptoVerif-only proof scripts are ignored by ProVerif.
+; def bodies are meaningful macros, not comments (currently opaque).
 (proof) @comment.unused
-(def) @comment.unused
 
 ;; Types
 (type_def
@@ -44,47 +44,38 @@
 
 (term_function_call
   name: (ident) @function)
-(term_function_call
- (term (ident) @variable.parameter))
+
 
 (pterm_function_call
   name: (ident) @function)
-(pterm_function_call
- (pterm (ident) @variable.parameter))
+
 
 (decl_process_macro
-  name: (ident) @function)
+  name: (ident) @function.macro)
 (decl_process_macro
- (typedecl (ident) @variable.parameter))
+ (failtypedecl (ident) @variable.parameter))
+(function_macro_def
+ (failtypedecl (ident) @variable.parameter))
+
+(projection) @function
 
 (gterm_function_call
   name: (ident) @function)
-(gterm_function_call
- (gterm (ident) @variable.parameter))
+
 
 (gformat_function_call
   name: (ident) @function)
-(gformat_function_call
- (gformat (ident) @variable.parameter))
+
 
 (process_function_call
-  name: (ident) @function)
-(process_function_call
- (pterm (ident) @variable.parameter))
+  name: (ident) @function.macro)
+
 
 (process_input "in" @function.builtin)
-(process_input
- (pterm (ident) @variable.parameter))
-(process_input
- (pattern (ident) @variable.parameter))
-(process_input
- (pattern (pattern (ident) @variable.parameter)))
+
 
 (process_output "out" @function.builtin)
-(process_output
- (pterm (ident) @variable.parameter))
-(process_output
- (pterm (pterm (ident) @variable.parameter)))
+
 
 ;; Literals
 
@@ -111,13 +102,14 @@
   "clauses"
   "const"
   "def"
+  "diff"
+  "do"
   "elimtrue"
   "else"
   "equation"
   "equivalence"
   "event"
   "expand"
-  "fail"
   "forall"
   "for"
   "foreach"
@@ -137,6 +129,7 @@
   "not"
   "nounif"
   "otherwise"
+  "or"
   "param"
   "phase"
   "pred"
@@ -161,7 +154,13 @@
 ] @keyword
 
 (decl_channel "channel" @keyword) ; "channel" can also be used as type, hence the restriction
-(process_let "in" @keyword) ; "in" can is keyword in "let ... in", but builtin function otherwise
+(process_let "in" @keyword)
+(process_get "in" @keyword)
+(pterm "in" @keyword)
+(gterm "in" @keyword)
+(gformat "in" @keyword)
+(equality "in" @keyword)
+(mayfailequality "in" @keyword)
 
 ;; Operators
 

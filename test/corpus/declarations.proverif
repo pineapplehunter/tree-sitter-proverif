@@ -322,7 +322,7 @@ letfun salted_hash(x: bitstring) = new salt: bitstring; hash_with_salt(salt, x).
   (decl
     (function_macro_def
       (ident)
-      (typedecl
+      (failtypedecl
         (ident)
         (typeid
           (ident)))
@@ -350,7 +350,7 @@ letfun encrypt(x: bitstring, y: key) = new r: sseed; internal_encrypt(x,y,r).
   (decl
     (function_macro_def
       (ident)
-      (typedecl
+      (failtypedecl
         (ident)
         (typeid
           (ident))
@@ -535,7 +535,7 @@ let foobar(x:bitstring) =
   (decl
     (decl_process_macro
       (ident)
-      (typedecl
+      (failtypedecl
         (ident)
         (typeid
           (ident)))
