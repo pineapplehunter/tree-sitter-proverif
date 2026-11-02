@@ -61,6 +61,12 @@
     }
   },
   {
+    "type": "comment",
+    "named": true,
+    "extra": true,
+    "fields": {}
+  },
+  {
     "type": "decl",
     "named": true,
     "fields": {},
@@ -1562,11 +1568,6 @@
     "named": false
   },
   {
-    "type": "comment",
-    "named": true,
-    "extra": true
-  },
-  {
     "type": "conclusion",
     "named": false
   },
@@ -1588,6 +1589,10 @@
   },
   {
     "type": "discardVerif",
+    "named": false
+  },
+  {
+    "type": "do",
     "named": false
   },
   {

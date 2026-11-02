@@ -1,0 +1,98 @@
+================================================================================
+advanced typed declarations, query terms, and process forms
+================================================================================
+fun zero(): nat.
+fun successor(nat): nat
+  reduc forall x: nat; successor(x) = x + 1
+  otherwise forall x: nat; successor(x) = fail.
+event reached(nat).
+query x: nat; inj-event(reached(x)) ==> attacker(x) public_vars x.
+process foreach i <= n do !event reached(successor(zero())); sync 1[tag]; 0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))))
+  (decl
+    (function_def
+      (ident)
+      (typeid
+        (ident))
+      (typeid
+        (ident))
+      (mayfailreduc
+        (failtypedecl
+          (ident)
+          (typeid
+            (ident)))
+        (mayfailequality
+          (ident)
+          (mayfailterm
+            (term
+              (ident)))
+          (mayfailterm
+            (term
+              (term
+                (ident))
+              (nat))))
+        (failtypedecl
+          (ident)
+          (typeid
+            (ident)))
+        (mayfailequality
+          (ident)
+          (mayfailterm
+            (term
+              (ident)))
+          (mayfailterm)))))
+  (decl
+    (decl_event
+      (ident)
+      (typeid
+        (ident))))
+  (decl
+    (decl_query
+      (typedecl
+        (ident)
+        (typeid
+          (ident)))
+      (query
+        (gterm
+          (gterm
+            (gterm
+              (gterm_function_call
+                (ident)
+                (gterm
+                  (ident)))))
+          (gterm
+            (gterm_function_call
+              (ident)
+              (gterm
+                (ident)))))
+        (ident))))
+  (process
+    (process_foreach
+      (ident)
+      (ident)
+      (process
+        (process_replication
+          (process
+            (process_item
+              (ident)
+              (pterm
+                (pterm_function_call
+                  (ident)
+                  (pterm
+                    (pterm_function_call
+                      (ident))))))
+            (process
+              (process_item
+                (nat)
+                (tag
+                  (ident)))
+              (process
+                (process_final_item)))))))))

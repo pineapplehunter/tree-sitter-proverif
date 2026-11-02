@@ -1,0 +1,35 @@
+================================================================================
+Nested, adjacent, and line comments
+================================================================================
+(* outer (* nested *) still outer *)
+(* first *)(* second *)
+# preserve line comments
+free c: channel. (* trailing (* nested *) comment *)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (decl
+    (decl_free
+      (ident)
+      (typeid)))
+  (comment))
+
+================================================================================
+Unterminated block comments are not accepted as complete comments
+================================================================================
+free c: channel. (* unfinished
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (decl
+    (decl_free
+      (ident)
+      (typeid)))
+  (ERROR
+    (ident)))

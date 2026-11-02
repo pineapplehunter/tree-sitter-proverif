@@ -1052,6 +1052,18 @@ lemma pid:bitstring, k:bitstring, i:nat, i':nat, x:nat, x':nat;
             (gterm
               (gterm
                 (gterm
+                  (ident))
+                (gterm
+                  (ident)))
+              (gterm
+                (gterm
+                  (ident))
+                (gterm
+                  (ident)))))
+          (gterm
+            (gterm
+              (gterm
+                (gterm
                   (gterm
                     (ident))
                   (gterm
@@ -1072,19 +1084,7 @@ lemma pid:bitstring, k:bitstring, i:nat, i':nat, x:nat, x':nat;
                   (gterm
                     (ident))
                   (gterm
-                    (ident))))))
-          (gterm
-            (gterm
-              (gterm
-                (gterm
-                  (ident))
-                (gterm
-                  (ident)))
-              (gterm
-                (gterm
-                  (ident))
-                (gterm
-                  (ident))))))))))
+                    (ident)))))))))))
 
 ================================================================================
 noninterf declaration

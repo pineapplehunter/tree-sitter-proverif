@@ -19,6 +19,8 @@ export default grammar({
     $.comment,
   ],
 
+  externals: $ => [$._block_comment],
+
   conflicts: $ => [
     [$._query],
     [$._typedecl, $.gterm],
@@ -52,6 +54,7 @@ export default grammar({
       'clauses',
       'const',
       'def',
+      'do',
       'elimtrue',
       'else',
       'equation',
@@ -112,10 +115,11 @@ export default grammar({
       ))
     ),
 
-    comment: $ => token(choice(
-      seq('#', /.*/),
-      seq('(*', /[^*]*\*+([^)*][^*]*\*+)*/, ')'),
-    )),
+    // Keep a stable comment node for both line and nested block comments.
+    comment: $ => choice(
+      token(seq('#', /.*/)),
+      $._block_comment,
+    ),
 
     _binding: $ => choice(
       seq('!', $.nat, '=', $.gformat),
@@ -124,7 +128,7 @@ export default grammar({
     binding: $ => _seq1(';', $._binding),
 
     // From Appendix A in the manual
-    ident: $ => token(/[A-Za-z_][A-Za-z0-9_'-]*/),
+    ident: $ => token(/[A-Za-z_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF][A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF'-]*/),
     nat: $ => /\d+/,
     int: $ => /-?\d+/,
     typeid: $ => choice(
@@ -178,12 +182,16 @@ export default grammar({
       $.nat,
       seq('(', _seq(',', $.term), ')'),
       $.term_function_call,
-      prec.left(5, seq($.term, choice('+', '-'), $.nat)),
-      prec.left(5, seq($.nat, '+', $.term)),
-      prec.left(4, seq($.term, choice('<', '>', '<=', '>='), $.term)),
-      prec.left(3, seq($.term, choice('=', '<>'), $.term)),
-      prec.left(2, seq($.term, '&&', $.term)),
-      prec.left(1, seq($.term, '||', $.term)),
+      prec.left(9, seq($.term, choice('+', '-'), $.nat)),
+      prec.left(9, seq($.nat, '+', $.term)),
+      prec(3, seq($.term, '=', $.term)),
+      prec(4, seq($.term, '<>', $.term)),
+      prec(5, seq($.term, '<=', $.term)),
+      prec(6, seq($.term, '>=', $.term)),
+      prec(7, seq($.term, '>', $.term)),
+      prec(8, seq($.term, '<', $.term)),
+      prec.right(2, seq($.term, '&&', $.term)),
+      prec.right(1, seq($.term, '||', $.term)),
       seq('not', '(', $.term, ')'),
     ),
     pterm_function_call: $ => seq(
@@ -195,12 +203,16 @@ export default grammar({
       seq('(', _seq(',', $.pterm), ')'),
       $.pterm_function_call,
       seq('choice', '[', $.pterm, ',', $.pterm, ']'),
-      prec.left(5, seq($.pterm, choice('+', '-'), $.nat)),
-      prec.left(5, seq($.nat, '+', $.pterm)),
-      prec.left(4, seq($.pterm, choice('<', '>', '<=', '>='), $.pterm)),
-      prec.left(3, seq($.pterm, choice('=', '<>'), $.pterm)),
-      prec.left(2, seq($.pterm, '&&', $.pterm)),
-      prec.left(1, seq($.pterm, '||', $.pterm)),
+      prec.left(9, seq($.pterm, choice('+', '-'), $.nat)),
+      prec.left(9, seq($.nat, '+', $.pterm)),
+      prec(3, seq($.pterm, '=', $.pterm)),
+      prec(4, seq($.pterm, '<>', $.pterm)),
+      prec(5, seq($.pterm, '<=', $.pterm)),
+      prec(6, seq($.pterm, '>=', $.pterm)),
+      prec(7, seq($.pterm, '>', $.pterm)),
+      prec(8, seq($.pterm, '<', $.pterm)),
+      prec.right(2, seq($.pterm, '&&', $.pterm)),
+      prec.right(1, seq($.pterm, '||', $.pterm)),
       seq('not', '(', $.pterm, ')'),
       seq(
         'new',
@@ -581,12 +593,16 @@ export default grammar({
         $.gterm,
         ']',
       ),
-      prec.left(5, seq($.gterm, choice('+', '-'), $.gterm)),
-      prec.left(5, seq($.nat, '+', $.gterm)),
-      prec.left(4, seq($.gterm, choice('<', '>', '<=', '>='), $.gterm)),
-      prec.left(3, seq($.gterm, choice('=', '<>'), $.gterm)),
-      prec.left(2, seq($.gterm, '&&', $.gterm)),
-      prec.left(1, seq($.gterm, '||', $.gterm)),
+      prec.left(9, seq($.gterm, choice('+', '-'), $.gterm)),
+      prec.left(9, seq($.nat, '+', $.gterm)),
+      prec(3, seq($.gterm, '=', $.gterm)),
+      prec(4, seq($.gterm, '<>', $.gterm)),
+      prec(5, seq($.gterm, '<=', $.gterm)),
+      prec(6, seq($.gterm, '>=', $.gterm)),
+      prec(7, seq($.gterm, '>', $.gterm)),
+      prec(8, seq($.gterm, '<', $.gterm)),
+      prec.right(2, seq($.gterm, '&&', $.gterm)),
+      prec.right(1, seq($.gterm, '||', $.gterm)),
       seq(
         choice('event', 'inj-event'),
         '(',
@@ -730,7 +746,7 @@ export default grammar({
       ),
     ),
     process_foreach: $ => seq(
-      'foreach', $.ident, '<=', $.ident, $.process
+      'foreach', $.ident, '<=', $.ident, 'do', $.process
     ),
     process_get: $ => seq(
       'get',
