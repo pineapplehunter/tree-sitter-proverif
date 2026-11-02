@@ -1,0 +1,17 @@
+(* A small typed model used to check editor queries. *)
+type key.
+free c: channel.
+free k: key [private].
+fun encrypt(bitstring, key): bitstring.
+fun decrypt(bitstring, key): bitstring.
+reduc forall m: bitstring, k: key; decrypt(encrypt(m, k), k) = m.
+event sent(bitstring).
+query m: bitstring; event(sent(m)) ==> attacker(m).
+let sender(message: bitstring) =
+  event sent(message);
+  out(c, encrypt(message, k)).
+process
+  new payload: bitstring;
+  (sender(payload) | in(c, ciphertext: bitstring);
+   let plaintext = decrypt(ciphertext, k) in
+   out(c, plaintext))
