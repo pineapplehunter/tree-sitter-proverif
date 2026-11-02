@@ -10,8 +10,8 @@ source = { path = "/absolute/path/to/tree-sitter-proverif" }
 name = "proverif"
 scope = "source.proverif"
 injection-regex = "^proverif$"
-file-types = ["pv"]
-comment-tokens = ["#"]
+file-types = ["pv", "pvl"]
+# ProVerif uses block comments, not shell-style # line comments.
 block-comment-tokens = { start = "(*", end = "*)" }
 grammar = "proverif"
 indent = { tab-width = 2, unit = "  " }

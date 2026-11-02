@@ -5,13 +5,16 @@ This repository contains a [tree-sitter][] grammar for ProVerif's typed pi
 calculus. It is a community grammar, not an official ProVerif parser; coverage
 is a work in progress. It follows the structure of Appendix A of the ProVerif
 2.05 manual. Consult the [current ProVerif manual][] for authoritative syntax.
+See [coverage and remaining limitations](docs/coverage.md) for the measured
+scope: all 100 regular typed examples from ProVerif 2.05 parse without errors,
+but this is not a claim of complete language coverage.
 
 Helix
 -----
 
 A Helix language configuration and queries are provided in
 [`examples/helix/languages.toml`](examples/helix/languages.toml) and
-[`queries/`](queries/). The sample configuration recognizes `.pv` files and
+[`queries/`](queries/). The sample configuration recognizes `.pv` and `.pvl` files and
 uses a local checkout so you get these improvements rather than the unchanged
 upstream parser. Set `source.path` to this checkout's **absolute** path, then
 merge its entries into your existing
@@ -66,7 +69,10 @@ npm test
 
 `npm test` checks corpus trees, parses an editor fixture, and compiles every
 shipped query. CI also verifies that generated sources are up to date.
-`npm run test:bindings` separately tests an installed Node binding.
+`npm run test:bindings` separately tests an installed Node binding, including
+incremental nested-comment edits and expected highlight captures. If you
+regenerate the parser after installing the binding, rebuild that binding before
+running its tests (`npm_config_build_from_source=true npm run install`).
 
 [tree-sitter]: https://tree-sitter.github.io/
 [ProVerif]: https://bblanche.gitlabpages.inria.fr/proverif/
